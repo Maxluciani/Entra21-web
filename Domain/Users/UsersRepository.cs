@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -10,7 +11,7 @@ namespace Domain
 
       public static void Add(User user)
      {
-        _user.add(user);
+        _users.Add(user);
      }
     }
 }
