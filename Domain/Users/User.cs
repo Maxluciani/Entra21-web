@@ -4,50 +4,26 @@ using System.Linq;
 
 namespace Domain
 {
-    public class User
+    public class User : person
     {
         public Guid Id {get; set; } =Guid.NewGuid();
-        public string Name {get; set; }
-        public Profile Profile {get; set; }
+                public Profile Profile {get; set; }
 
-        public User(string name,Profile profile)
+        public User(string name,Profile profile) : base(name)
         {
-            Name = name;
+            
             Profile = profile;
         }
-        private bool ValidateName()
+        public (IList<string> errors,bool isValid) Validate()
         {
-            if(string.IsNullOrEmpty(Name))
+            var errors = new List<string>();
+            if(!ValidateName())
             {
-                return false;
+                errors.Add("Nome Inválido");
             }
-            var words = Name.Split(' ');
-            if(words.Length<2)
-            {
-                return false;
-            }
-            foreach (var word in words)
-            {
-                if(word.Trim().Length <2)
-                {
-                    return false;
-                }
-                if(word.Any(x => !char.IsLetter(x)))
-                {
-                    return false;
-                }
-            }
-            return true;
+            return (errors,errors.Count == 0);
         }
-        public (IList<string> errors , bool isValid) Validate()
-        {
-          var errors = new List<string>();
-          if(!ValidateName())
-          {
-              errors.Add("Nome inválido");
-          }
-          return (errors,errors.Count ==0);
-        }
+        
     }
 }
 

@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+
 namespace Domain
 {
     public class UsersService
@@ -14,6 +17,10 @@ namespace Domain
             return new CreatedUserDTO(user.Id);
             }
             return new CreatedUserDTO(userValidation.errors);
+        }
+        public User GetById(Guid id)
+        {
+            return UsersRepository.User.FirstOrDefault(x => x.Id == id);
         }
         
     }
